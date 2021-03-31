@@ -8,7 +8,12 @@ public class PrimeCounter {
 
     private static int count;
     private static final int N_THREADS = 100;
-    private static final ExecutorService exec = Executors.newFixedThreadPool(N_THREADS);
+    private static ExecutorService exec;
+
+    PrimeCounter(int _n_threads)
+    {
+        exec = Executors.newFixedThreadPool(_n_threads);
+    }
 
     @Deprecated
     public void start(int _n) {
@@ -26,11 +31,12 @@ public class PrimeCounter {
                     }
                 }
             });
-            thread.run();
+            thread.start();
         }
     }
 
     public void start2(int _n) {
+        count = 0;
 
         try {
             for (int i = _n; i > 0; i--) {
@@ -40,7 +46,7 @@ public class PrimeCounter {
                     @Override
                     public void run() {
                         if (isPrime(thread_n)) {
-                            synchronized (this) {
+                            synchronized ("count") {
                                 count++;
                             }
                         }
@@ -51,7 +57,7 @@ public class PrimeCounter {
             }
 
             exec.shutdown();
-            exec.awaitTermination(30, TimeUnit.SECONDS);
+            exec.awaitTermination(2, TimeUnit.MINUTES);
 
         } catch (InterruptedException e) {
             e.printStackTrace();
@@ -71,7 +77,7 @@ public class PrimeCounter {
         return true;
     }
 
-    public static int getCount() {
+    public int getCount() {
         return count;
     }
 }
