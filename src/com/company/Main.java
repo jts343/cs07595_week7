@@ -4,7 +4,11 @@ public class Main {
 
     public static void main(String[] args) {
 
-	final int PRIME_LIMIT = 1000000;
+    	SwingGUI gui = new SwingGUI();
+
+    	gui.startGUI();
+
+	final int PRIME_LIMIT = 10000;
 	final int[] threadPoolSizes = new int[]{1, 2, getCoreCount()+1, 10, 50, 100, 150, 200};
 
 		for (int poolsize : threadPoolSizes)
