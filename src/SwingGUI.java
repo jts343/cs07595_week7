@@ -10,7 +10,7 @@ public class SwingGUI extends JFrame implements ActionListener
     JTextArea resultBox;
     JButton submitButton;
     JButton cancelButton;
-    private final PrimeCounter primeCounter;
+    protected final PrimeCounter primeCounter;
     JButton exitButton;
 
     SwingGUI()

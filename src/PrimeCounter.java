@@ -124,8 +124,11 @@ public class PrimeCounter
 
     public void interrupt()
     {
-        exec.shutdownNow();
-        interruptCalled = true;
+        if(exec != null)
+        {
+            exec.shutdownNow();
+            interruptCalled = true;
+        }
     }
 
     public boolean isAvailable()
