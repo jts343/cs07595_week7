@@ -1,12 +1,15 @@
 import javax.swing.*;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 public class PrimeCounter
 {
-    private static int count;
     public static ExecutorService exec;
     public static boolean interruptCalled;
+    private static int count;
     private final int nThreads;
     private final boolean isAvailable;
 
@@ -90,6 +93,27 @@ public class PrimeCounter
         {
             e.printStackTrace();
         }
+    }
+
+    public void start3(int start_n,
+                       int stop_n,
+                       JTextArea resultBox)
+    {
+        count = 0; //reset count
+
+        //generate List, [start_n:stop_n]
+        List<Integer> range = IntStream
+                .rangeClosed(start_n, stop_n)
+                .boxed()
+                .collect(Collectors.toList());
+
+        range
+                .parallelStream() // multithreaded stream
+                .filter(i -> isPrime(i)) // filter on Primes
+                .forEach(i -> { // for each prime number
+                    resultBox.setText(Integer.toString(++count)); // set result display to new count
+                    resultBox.update(resultBox.getGraphics()); // refresh result display incrementally
+                });
     }
 
     public boolean isPrime(int n)

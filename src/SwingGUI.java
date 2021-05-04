@@ -114,7 +114,7 @@ public class SwingGUI extends JFrame implements ActionListener
                 int stopN = Integer.parseInt(stopNumberTextBox.getText());
 
                 System.out.println("starting prime counter");
-                primeCounter.start2(startN, stopN, resultBox);
+                primeCounter.start3(startN, stopN, resultBox);
 
                 resultBox.setText(String.valueOf(primeCounter.getCount()));
             }
