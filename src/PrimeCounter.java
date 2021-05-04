@@ -2,6 +2,7 @@ import javax.swing.*;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -85,6 +86,7 @@ public class PrimeCounter
             }
 
             exec.shutdown();
+            exec.awaitTermination(2, TimeUnit.MINUTES);
             interruptCalled = false;
             System.out.println("Final count: " + count);
 
@@ -114,6 +116,8 @@ public class PrimeCounter
                     resultBox.setText(Integer.toString(++count)); // set result display to new count
                     resultBox.update(resultBox.getGraphics()); // refresh result display incrementally
                 });
+
+        System.out.println("Final count: " + resultBox.getText());
     }
 
     public boolean isPrime(int n)
